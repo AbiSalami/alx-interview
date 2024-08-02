@@ -8,16 +8,16 @@ def canUnlockAll(boxes):
     if not isinstance(boxes, list) or len(boxes) == 0:
         return False
 
-    check = [0]
     total_boxes = len(boxes)
-    list_ing = list(range(total_boxes))
+    opened = [False] * total_boxes
+    opened[0] = True
+    to_check = [0]
 
-    for in_check in check:
-        for in_boxes in boxes[in_check]:
-            if in_boxes not in check and in_boxes in list_ing:
-                if in_boxes >= total_boxes:
-                    return False
-                check.append(in_boxes)
-                if len(check) == total_boxes:
-                    return True
-    return len(check) == total_boxes
+    while to_check:
+        current = to_check.pop(0)
+        for key in boxes[current]:
+            if 0 <= key < total_boxes and not opened[key]:
+                opened[key] = True
+                to_check.append(key)
+
+    return all(opened)
