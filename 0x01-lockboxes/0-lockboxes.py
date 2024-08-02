@@ -1,25 +1,23 @@
 #!/usr/bin/python3
-""" Module that checks locked boxes """
+"""Module that checks locked boxes."""
+
 
 def canUnlockAll(boxes):
-    """ Method that determines if all boxes can be opened """
-    if not isinstance(boxes, list):
+    """Method that determines if all boxes can be opened."""
+
+    if not isinstance(boxes, list) or len(boxes) == 0:
         return False
 
-    if len(boxes) == 0:
-        return False
-
-    opened = [0]
+    check = [0]
     total_boxes = len(boxes)
     list_ing = list(range(total_boxes))
 
-    for in_check in opened:
-        for key in boxes[in_check]:
-            if key not in opened and key in list_ing:
-                if key >= total_boxes:
+    for in_check in check:
+        for in_boxes in boxes[in_check]:
+            if in_boxes not in check and in_boxes in list_ing:
+                if in_boxes >= total_boxes:
                     return False
-                opened.append(key)
-                if len(opened) == total_boxes:
+                check.append(in_boxes)
+                if len(check) == total_boxes:
                     return True
-    return len(opened) == total_boxes
-
+    return len(check) == total_boxes
