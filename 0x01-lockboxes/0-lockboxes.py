@@ -1,4 +1,16 @@
+#!/usr/bin/python3
+"""
+0-lockboxes module
+"""
+
 def canUnlockAll(boxes):
+    """
+    Determines if all boxes can be unlocked
+    Args:
+        boxes (list of list of int): list of boxes with keys
+    Returns:
+        bool: True if all boxes can be unlocked, else False
+    """
     n = len(boxes)
     opened = set([0])
     stack = [0]
