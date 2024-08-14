@@ -49,3 +49,4 @@ try:
 
 finally:
     print_stats()
+
