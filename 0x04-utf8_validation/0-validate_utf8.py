@@ -1,38 +1,40 @@
 #!/usr/bin/python3
+"""UTF-8 Validation Module."""
 
-
-"""UTF-8 Validation"""
-
-def validUTF8(data):
-    """Determines if a given data set
-    represents a valid utf-8 encoding
+def valid_utf8(data):
     """
-    number_bytes = 0
+    Determines if a given data set represents a valid UTF-8 encoding.
 
-    mask_1 = 1 << 7
-    mask_2 = 1 << 6
+    Args:
+        data (list): A list of integers representing bytes in the data.
 
-    for i in data:
+    Returns:
+        bool: True if data is valid UTF-8, False otherwise.
+    """
+    remaining_bytes = 0
 
+    leading_one_mask = 1 << 7
+    second_bit_mask = 1 << 6
+
+    for byte in data:
         mask_byte = 1 << 7
 
-        if number_bytes == 0:
+        if remaining_bytes == 0:
+            while mask_byte & byte:
+                remaining_bytes += 1
+                mask_byte >>= 1
 
-            while mask_byte & i:
-                number_bytes += 1
-                mask_byte = mask_byte >> 1
-
-            if number_bytes == 0:
+            if remaining_bytes == 0:
                 continue
 
-            if number_bytes == 1 or number_bytes > 4:
+            if remaining_bytes == 1 or remaining_bytes > 4:
                 return False
 
         else:
-            if not (i & mask_1 and not (i & mask_2)):
+            if not (byte & leading_one_mask and not (byte & second_bit_mask)):
                 return False
 
-        number_bytes -= 1
+        remaining_bytes -= 1
 
-    return number_bytes == 0
+    return remaining_bytes == 0
 
